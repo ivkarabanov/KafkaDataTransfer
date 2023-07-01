@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="2.1.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.23.3" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.54.0" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<Protobuf ProtoRoot="Proto" Include="Proto\note.proto" GrpcServices="none" />
+	</ItemGroup>
+
+</Project>

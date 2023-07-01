@@ -1,0 +1,12 @@
+﻿syntax = "proto3";
+package WebKafkaTry;
+option csharp_namespace = "WebKafkaTry.Proto";
+
+import "google/protobuf/timestamp.proto";
+
+message KafkaNote{
+    google.protobuf.Timestamp created_on = 1;
+    string theme = 2;
+    repeated int64 categoryIds = 3;
+    string text = 4;
+}
