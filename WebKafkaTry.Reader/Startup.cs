@@ -1,14 +1,15 @@
+using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using WebKafkaTry.Common.Repositories;
+using WebKafkaTry.Configurations;
+using WebKafkaTry.Reader.Kakfa;
+using WebKafkaTry.Reader.Migrations;
+using WebKafkaTry.Reader.Repositories;
 using WebKafkaTry.Reader.Services.Background;
 
 namespace WebKafkaTry.Reader
@@ -25,8 +26,24 @@ namespace WebKafkaTry.Reader
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddRazorPages();
+            services.Configure<KafkaSettings>(Configuration.GetSection(nameof(KafkaSettings)));
             services.AddHostedService<BackgroundReader>();
+            services.AddSingleton<INoteConsumer, NoteConsumer>();
+
+            var connectionString = Configuration.GetConnectionString("NotesDB");
+            services.AddFluentMigratorCore()
+                .ConfigureRunner(rb => rb
+                    // Add SQLite support to FluentMigrator
+                    .AddSqlServer()
+                    // Set the connection string
+                    .WithGlobalConnectionString(connectionString)
+                    // Define the assembly containing the migrations
+                    .ScanIn(typeof(Startup).Assembly).For.Migrations())
+                // Enable logging to console in the FluentMigrator way
+                .AddLogging(lb => lb.AddFluentMigratorConsole());
+            services.AddSingleton<INoteRepository>(x => new NoteRepository(connectionString));
+
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +73,8 @@ namespace WebKafkaTry.Reader
                     await context.Response.WriteAsync("Hello World!");
                 });
             });
+
+            app.Migrate();
         }
     }
 }

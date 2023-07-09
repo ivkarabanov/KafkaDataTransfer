@@ -7,12 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebKafkaTry.Writer", "WebKa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{4BDC62BE-E325-4FB5-85DC-92071D6FAEC0}"
 	ProjectSection(SolutionItems) = preProject
-		..\docker-compose.yml = ..\docker-compose.yml
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebKafkaTry.Reader", "WebKafkaTry.Reader\WebKafkaTry.Reader.csproj", "{278C8791-1770-45E2-AD0B-545AA813E640}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebKafkaTry.Reader", "WebKafkaTry.Reader\WebKafkaTry.Reader.csproj", "{278C8791-1770-45E2-AD0B-545AA813E640}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebKafkaTry.Common", "WebKafkaTry.Common\WebKafkaTry.Common.csproj", "{8D0021E5-D572-4B44-8379-90AE1C7F84D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebKafkaTry.Common", "WebKafkaTry.Common\WebKafkaTry.Common.csproj", "{8D0021E5-D572-4B44-8379-90AE1C7F84D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
